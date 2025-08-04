@@ -1,0 +1,22 @@
+version: "3.9"
+services:
+ backend:
+  build:
+   context: /root/proway-docker/pizzaria-app/backend
+  ports: 
+   - "5001:5000"
+  networks:
+   - pizzaria-network
+
+ frontend:
+  build:
+   context: /root/proway-docker/pizzaria-app/frontend
+  ports:
+   - "8080:80" 
+  depends_on:
+   - backend
+  networks:
+   - pizzaria-network
+
+networks:
+  pizzaria-network: 
