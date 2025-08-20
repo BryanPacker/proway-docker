@@ -18,7 +18,9 @@ elif [ ! -d "proway-docker/.git" ]; then
     cd proway-docker
 else
     cd proway-docker
-    git pull
+     # Use git reset --hard to ensure idempotency (restores deleted files)
+    git fetch origin
+    git reset --hard origin/main 2>/dev/null || git reset --hard origin/master
 fi
 
 # Kill processes running on ports 8080 and 5001
