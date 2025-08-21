@@ -1,8 +1,18 @@
 # This script is responsible for deploying the Pizzaria project in an idempotent way
+# step 1 - Installing required packages
+# step 2 - Cloning and updating latest changs
+# step 3 - Kill in the ports the application need 
+# step 4 - Change necessary things at code
+# step 5 - Add a cron job restarting the application and ensuring it's updated
+
 #!/usr/bin/env bash
 
 # Installing required packages
 apt update && apt install -y docker.io git docker-compose cron lsof
+
+for tools in docker.io docker-compose git cron; do
+ systemctl restart $tools
+done
 
 # Navigate to root directory (required for repository management)
 cd /root
@@ -11,7 +21,7 @@ cd /root
 if [ ! -d "proway-docker" ]; then
     git clone https://github.com/BryanPacker/proway-docker.git
     cd proway-docker
-elif [ ! -d "proway-docker/.git" ]; then
+elif [ ! -d "proway-docker/.git" ] || [ ! -f "proway-docker/pizza.yml" ]; then
     # Folder exists but is not a valid git repository -> remove and re-clone
     rm -rf proway-docker
     git clone https://github.com/BryanPacker/proway-docker.git
@@ -21,7 +31,7 @@ else
      # Use git reset --hard to ensure idempotency (restores deleted files)
     git fetch origin
     git reset --hard origin/main 2>/dev/null || git reset --hard origin/master
-    chmod +x projeto_pizza.sh
+    [ -f projeto_pizza.sh ] && chmod +x /root/proway-docker/projeto_pizza.sh
 fi
 
 # Kill processes running on ports 8080 and 5001
@@ -51,4 +61,9 @@ docker-compose -f pizza.yml up -d --build
 (crontab -l 2>/dev/null | grep -v "projeto_pizza.sh"; echo "*/5 * * * * /root/proway-docker/projeto_pizza.sh") | crontab -
 
 # Log last execution (overwrites instead of appending)
-echo "$(date '+%c'): Cron job executed successfully!" > /tmp/cron-test.log
+touch /root/proway-docker/cron.log
+echo "$(date '+%c'): Cron job executed successfully!" > /root/proway-docker/cron.log
+
+echo " --------------------------------------------- "
+echo " Application running in http://$SERVER_IP:8080 "
+echo " --------------------------------------------- "
