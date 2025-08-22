@@ -11,7 +11,8 @@
 apt update && apt install -y docker.io git docker-compose cron lsof
 
 for tools in docker cron; do
- systemctl restart $tools
+ systemctl start $tools
+ systemctl enable $tools
 done
 
 # Navigate to root directory (required for repository management)
