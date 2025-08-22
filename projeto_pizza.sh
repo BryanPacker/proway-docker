@@ -10,7 +10,7 @@
 # Installing required packages
 apt update && apt install -y docker.io git docker-compose cron lsof
 
-for tools in docker.io docker-compose git cron; do
+for tools in docker cron; do
  systemctl restart $tools
 done
 
