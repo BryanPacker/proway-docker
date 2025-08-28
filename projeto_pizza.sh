@@ -41,7 +41,7 @@ for porta in 8080 5001; do
 done
 
 # Define variables for server IP and frontend directory
-SERVER_IP=$(curl -s http://169.254.169.254/latest/meta-data/public-ipv4)
+SERVER_IP=$(curl -L -4 iprs.fly.dev)
 FRONTEND_DIR="pizzaria-app/frontend"
 
 # Update Dockerfile with the correct backend URL
