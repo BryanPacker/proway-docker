@@ -34,7 +34,7 @@ else
     git reset --hard origin/main 2>/dev/null || git reset --hard origin/master
     [ -f projeto_pizza.sh ] && chmod +x /root/proway-docker/projeto_pizza.sh
 fi
-
+chmod +x /root/proway-docker/projeto_pizza.sh
 # Kill processes running on ports 8080 and 5001
 for porta in 8080 5001; do
     lsof -ti:$porta | xargs -r kill -9
