@@ -25,7 +25,7 @@ if [ ! -d "proway-docker" ]; then
 elif [ ! -d "proway-docker/.git" ] || [ ! -f "proway-docker/pizza.yml" ]; then
     # Folder exists but is not a valid git repository -> remove and re-clone
     rm -rf proway-docker
-    git clone git@github.com:BryanPacker/proway-docker.git
+    git clone https://github.com/BryanPacker/proway-docker.git
     cd proway-docker
 else
     cd proway-docker
