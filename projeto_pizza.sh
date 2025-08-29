@@ -45,14 +45,14 @@ SERVER_IP=$(curl ifconfig.me)
 FRONTEND_DIR="pizzaria-app/frontend"
 
 # Update Dockerfile with the correct backend URL
-if [ -f "$FRONTEND_DIR/Dockerfile" ]; then
-    sed -i "s|REACT_APP_BACKEND_URL=http://.*:5001|REACT_APP_BACKEND_URL=http://$SERVER_IP:5001|g" "$FRONTEND_DIR/Dockerfile"
-fi
+#if [ -f "$FRONTEND_DIR/Dockerfile" ]; then
+ #   sed -i "s|REACT_APP_BACKEND_URL=http://.*:5001|REACT_APP_BACKEND_URL=http://$SERVER_IP:5001|g" "$FRONTEND_DIR/Dockerfile"
+#fi
 
 # Update index.html with the correct backend URL
-if [ -f "$FRONTEND_DIR/public/index.html" ]; then
-    sed -i "s|http://.*:5001|http://$SERVER_IP:5001|g" "$FRONTEND_DIR/public/index.html"
-fi
+#@if [ -f "$FRONTEND_DIR/public/index.html" ]; then
+ #   sed -i "s|http://.*:5001|http://$SERVER_IP:5001|g" "$FRONTEND_DIR/public/index.html"
+#fi
 
 # Deploy project using Docker Compose
 cd /root/proway-docker/
