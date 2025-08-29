@@ -161,12 +161,15 @@
         const cart = [];
         
         // Function to fetch pizzas from the backend API
-        async function fetchPizzas() {
-            try {
-                const response = await fetch('http://192.168.1.15:5001/api/pizzas');
-                if (!response.ok) {
-                    throw new Error('Falha ao carregar o cardápio. Por favor, tente novamente mais tarde.');
-                }
+       // Em seu código React
+async function fetchPizzas() {
+    try {
+        // Agora usa o caminho relativo. Muito mais limpo!
+        const response = await fetch('/api/pizzas'); 
+        if (!response.ok) {
+            throw new Error('Falha ao carregar o cardápio. Por favor, tente novamente mais tarde.');
+        }
+        // ... resto do código
                 
                 pizzas = await response.json();
                 document.getElementById('loading').style.display = 'none';
